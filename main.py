@@ -1,1 +1,2 @@
-print('Hello python!')
+from credentials import BOT_TOKEN
+
