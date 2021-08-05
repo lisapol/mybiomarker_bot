@@ -4,6 +4,9 @@ import logging
 import telegram
 import datetime
 
+import os
+PORT = int(os.environ.get('PORT', 5000))
+
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import (
     Updater,
@@ -212,11 +215,15 @@ def main() -> None:
     dispatcher.add_handler(conv_handler)
 
     # Start the Bot
-    updater.start_polling()
+    # updater.start_polling()
 
     # Run the bot until you press Ctrl-C or the process receives SIGINT,
     # SIGTERM or SIGABRT. This should be used most of the time, since
     # start_polling() is non-blocking and will stop the bot gracefully.
+    updater.start_webhook(listen="0.0.0.0",
+                          port=int(PORT),
+                          url_path=bot_token)
+    updater.bot.setWebhook('https://mybiomarker-bot-cycle.herokuapp.com/' + bot)
     updater.idle()
 
 
